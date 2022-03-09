@@ -5,14 +5,29 @@
     <span class="addContainer" v-on:click="addTodo">
       <i class="addBtn"> + </i>
     </span>
+    <Modal v-if="showModal" @close="showModal = false">
+      <!--
+      you can use custom content here to overwrite
+      default content
+    -->
+      <h3 slot="header">
+        경고!
+        <i @click="showModal = false"> x </i>
+      </h3>
+      <p slot="body">새로운 바디 슬롯</p>
+      <p slot="footer">새로운 푸터 슬롯</p>
+    </Modal>
   </div>
 </template>
 
 <script>
+import Modal from "./common/AlertModal.vue";
+
 export default {
   data: function () {
     return {
       newTodoItem: "",
+      showModal: false,
     };
   },
   methods: {
@@ -21,8 +36,13 @@ export default {
         this.$emit("addTodoItem", this.newTodoItem);
         // localStorage.setItem(this.newTodoItem, obj);
         this.newTodoItem = "";
+      } else {
+        this.showModal = !this.showModal;
       }
     },
+  },
+  components: {
+    Modal: Modal,
   },
 };
 </script>
