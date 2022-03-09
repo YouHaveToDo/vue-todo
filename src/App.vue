@@ -4,7 +4,8 @@
     <todo-input v-on:addTodoItem="addOneItem"></todo-input>
     <todo-list
       v-bind:propsdata="todoItems"
-      v-on:removeItem="removeOneItem(todoItem, index)"
+      v-on:removeItem="removeOneItem"
+      v-on:toggleItem="toggleOneItem"
     ></todo-list>
     <todo-footer v-on:clearTodoAll="clearTodo"></todo-footer>
   </div>
@@ -25,7 +26,7 @@ export default {
   methods: {
     addOneItem: function (todoItem) {
       let obj = { completed: false, item: todoItem };
-      localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+      localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },
     clearTodo: function () {
@@ -33,7 +34,15 @@ export default {
       this.todoItems = [];
     },
     removeOneItem: function (todoItem, index) {
+      localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);
+    },
+    toggleOneItem: function (todoItem, index) {
+      console.log(todoItem, index);
+      this.todoItems[index].completed = !this.todoItems[index].completed;
+      // 로컬 스토리지의 데이터를 갱신
+      localStorage.removeItem(todoItem.item);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
   },
   created: function () {
