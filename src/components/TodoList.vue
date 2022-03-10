@@ -4,7 +4,7 @@
       <!-- 반복문 -->
       <li
         class="shadow"
-        v-for="(todoItem, index) in propsdata"
+        v-for="(todoItem, index) in this.$store.state.todoItems"
         v-bind:key="todoItem.item"
       >
         <i
@@ -27,13 +27,12 @@
 
 <script>
 export default {
-  props: ["propsdata"],
   methods: {
     removeTodo(todoItem, index) {
-      this.$emit("removeItem", todoItem, index);
+      this.$store.commit("removeOneItem", { todoItem, index });
     },
     toggleComplete(todoItem, index) {
-      this.$emit("toggleItem", todoItem, index);
+      this.$store.commit("toggleOneItem", { todoItem, index });
     },
   },
 };
