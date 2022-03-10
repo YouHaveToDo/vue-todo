@@ -24,9 +24,15 @@ const Storage = {
 // getter: 연산된 state 값을 접근하는 속성 computed
 // mutations: state 값을 변경하는 이벤트 로직 ∙ 메서드 methods
 // actions: 비동기 처리 로직을 선언하는 메서드 aysnc methods
+
 export const store = new Vuex.Store({
   state: {
     todoItems: Storage.fetch(),
+  },
+  getters: {
+    storedTodoItems(state) {
+      return state.todoItems;
+    },
   },
   mutations: {
     addOneItem(state, todoItem) {
