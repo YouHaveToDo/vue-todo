@@ -62,3 +62,5 @@ export const store = new Vuex.Store({
     },
   },
 });
+
+// store 모듈화
